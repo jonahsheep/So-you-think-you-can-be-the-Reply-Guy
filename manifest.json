@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "So You Think You Can Be The Reply Guy",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Counts replies on X. Roasts you via notifications if you switch tabs before hitting your quota. Auto-resets daily.",
   "permissions": [
     "storage",
@@ -44,13 +44,14 @@
     },
     {
       "matches": [
-        "*://*/*"
+        "<all_urls>"
       ],
       "js": [
         "roast_popup.js",
         "celebration_popup.js"
       ],
-      "run_at": "document_idle"
+      "run_at": "document_idle",
+      "all_frames": false
     }
   ],
   "options_page": "options.html"
