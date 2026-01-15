@@ -63,3 +63,15 @@ The extension should now appear with its little badge counter.
 5. Return to the replies.  
 6. Become stronger.
 
+
+## 📝 Changelog
+
+### v3.2.1 (2026-01-15)
+- **Security & Compliance**: Removed excess permissions for Chrome Web Store compliance
+  - Removed unused `activeTab` permission
+  - Removed overly broad `*://*/*` host permission
+  - Removed unnecessary `<all_urls>` content script injection
+  - Extension now only requests permissions it actually uses
+
+### v3.2.0
+- Initial feature-complete version with reply counting, roasting, and celebration features
