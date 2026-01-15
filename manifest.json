@@ -40,18 +40,6 @@
         "content_script.js"
       ],
       "run_at": "document_idle"
-    },
-    {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "roast_popup.js",
-        "celebration_popup.js"
-      ],
-      "run_at": "document_idle",
-      "all_frames": false
-    }
-  ],
-  "options_page": "options.html"
-}
+    ],
+    "options_page": "options.html"
+  }
