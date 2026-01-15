@@ -27,6 +27,7 @@ Then congratulations. You’ve found your calling.
 - ✔️ **Badge counter** showing progress  
 - ✔️ **Options page** to adjust quota or reset count  
 - ✔️ Works on **https://x.com** and **https://twitter.com**
+- ✔️ **Minimal permissions** - only requests what it needs (storage, tabs, notifications, alarms)
 
 
 ## 😂 Sample “Reply Guy” Roast Lines - coming soon-
