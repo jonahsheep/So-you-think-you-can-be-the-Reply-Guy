@@ -45,6 +45,8 @@ It's like having your own personal hype man — if he was significantly more ann
 
 ## 📦 Installation (Developer Mode)
 
+> **Note**: This extension follows Chrome Web Store best practices with minimal permissions.
+
 1. Download or clone this repository.  
 2. Open Chrome and go to:  
    **chrome://extensions/**  
