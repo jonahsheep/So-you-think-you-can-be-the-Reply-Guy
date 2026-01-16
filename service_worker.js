@@ -1,8 +1,5 @@
 const DEFAULT_REQUIRED = 3;
 
-// Milestones for celebrations
-const MILESTONES = [10, 50, 100, 200, 500, 1000];
-
 // --- 1. FUNCTIONS (DEFINED FIRST TO PREVENT CRASHES) ---
 
 function isoDateToday() {
@@ -29,42 +26,7 @@ async function updateBadge() {
   }
 }
 
-async function checkMilestone(count) {
-  try {
-    const data = await chrome.storage.sync.get(["lastCelebratedMilestone"]);
-    const lastCelebrated = data.lastCelebratedMilestone || 0;
 
-    // Find the highest milestone we just reached
-    for (const milestone of MILESTONES) {
-      if (count >= milestone && lastCelebrated < milestone) {
-        console.log(`Milestone reached: ${milestone}`);
-
-        // Update last celebrated milestone
-        await chrome.storage.sync.set({ lastCelebratedMilestone: milestone });
-
-        // Notify all tabs to show celebration
-        const tabs = await chrome.tabs.query({});
-        for (const tab of tabs) {
-          try {
-            await chrome.tabs.sendMessage(tab.id, {
-              type: 'SHOW_CELEBRATION',
-              milestone: milestone,
-              totalCount: count,
-              isQuota: false
-            });
-          } catch (e) {
-            // Tab might not have content script, ignore
-          }
-        }
-
-        // Only celebrate the first milestone reached
-        break;
-      }
-    }
-  } catch (e) {
-    console.error("Milestone check error:", e);
-  }
-}
 
 async function checkDailyReset() {
   try {
@@ -76,7 +38,6 @@ async function checkDailyReset() {
       await chrome.storage.sync.set({
         count: 0,
         lastResetDate: today,
-        lastCelebratedMilestone: 0, // Reset milestone tracking for new day
         quotaCelebrated: false // Reset quota celebration for new day
       });
       updateBadge();
@@ -169,11 +130,11 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         console.log(`Daily quota met: ${newCount}/${required}`);
         await chrome.storage.sync.set({ quotaCelebrated: true });
 
-        // Show quota celebration
-        const tabs = await chrome.tabs.query({});
-        for (const tab of tabs) {
+        // Show quota celebration only on active tab
+        const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+        if (tabs.length > 0) {
           try {
-            await chrome.tabs.sendMessage(tab.id, {
+            await chrome.tabs.sendMessage(tabs[0].id, {
               type: 'SHOW_CELEBRATION',
               milestone: required,
               totalCount: newCount,
@@ -185,16 +146,49 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         }
       }
 
-      // Check if this count hits a milestone
-      await checkMilestone(newCount);
-
       sendResponse({ success: true, newCount });
     })();
     return true; // Keep channel open
   }
 
   if (msg.type === 'USER_LEFT_TAB') {
-    bullyUser();
+    (async () => {
+      const data = await chrome.storage.sync.get(["count", "requiredReplies"]);
+      const count = (data && data.count) ? data.count : 0;
+      const required = (data && data.requiredReplies) ? data.requiredReplies : DEFAULT_REQUIRED;
+
+      if (count < required) {
+        const roast = ROASTS[Math.floor(Math.random() * ROASTS.length)];
+
+        // Send notification
+        try {
+          chrome.notifications.create({
+            type: 'basic',
+            iconUrl: 'icon.png',
+            title: 'Get Back To Work',
+            message: `${roast} (${count}/${required})`,
+            priority: 2
+          });
+        } catch (notifError) {
+          console.log("Notification failed:", notifError);
+        }
+
+        // Send popup to active tab only
+        const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+        if (tabs.length > 0) {
+          try {
+            await chrome.tabs.sendMessage(tabs[0].id, {
+              type: 'SHOW_ROAST_POPUP',
+              roast: roast,
+              count: count,
+              required: required
+            });
+          } catch (e) {
+            console.log("Could not send roast popup:", e);
+          }
+        }
+      }
+    })();
   }
 
   if (msg.type === 'UPDATE_BADGE') {
