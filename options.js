@@ -54,7 +54,7 @@ resetBtn.addEventListener('click', async () => {
   await chrome.storage.sync.set({
     count: 0,
     lastResetDate: today,
-    lastCelebratedMilestone: 0 // Reset milestone tracking
+    quotaCelebrated: false // Reset quota celebration
   });
 
   const data = await chrome.storage.sync.get(['requiredReplies']);
