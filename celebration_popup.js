@@ -7,17 +7,13 @@
       if (!celebrationShown) {
         showCelebration(msg.milestone, msg.totalCount, msg.isQuota);
         celebrationShown = true;
-        // Reset after 10 seconds to allow showing again if needed
-        setTimeout(() => { celebrationShown = false; }, 10000);
+        // Reset after 3 seconds to allow showing again if needed
+        setTimeout(() => { celebrationShown = false; }, 3000);
       }
     }
   });
 
   function showCelebration(milestone, totalCount, isQuota = false) {
-    // Don't show on X/Twitter pages
-    if (window.location.hostname.includes('x.com') || window.location.hostname.includes('twitter.com')) {
-      return;
-    }
 
     // Create backdrop
     const backdrop = document.createElement('div');
