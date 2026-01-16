@@ -1,11 +1,15 @@
 (function () {
   let popupShown = false;
+  let lastShownTime = 0;
 
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     if (msg.type === 'SHOW_ROAST_POPUP') {
-      if (!popupShown) {
+      // Allow showing popup if it hasn't been shown in the last 5 seconds (prevent spam)
+      const now = Date.now();
+      if (!popupShown || (now - lastShownTime) > 5000) {
         showRoastPopup(msg.roast, msg.count, msg.required);
         popupShown = true;
+        lastShownTime = now;
       }
     }
   });
@@ -111,6 +115,7 @@
     };
 
     button.onclick = () => {
+      popupShown = false; // Reset flag so popup can show again
       window.location.href = 'https://x.com';
     };
 
@@ -141,6 +146,7 @@
     popup.appendChild(button);
     backdrop.appendChild(popup);
 
+
     // Add to page
     document.body.appendChild(backdrop);
 
@@ -149,5 +155,32 @@
 
     // Auto-focus button
     button.focus();
+
+    // Close on backdrop click
+    backdrop.onclick = (e) => {
+      if (e.target === backdrop) {
+        closePopup();
+      }
+    };
+
+    // Close on ESC key
+    const escHandler = (e) => {
+      if (e.key === 'Escape') {
+        closePopup();
+        document.removeEventListener('keydown', escHandler);
+      }
+    };
+    document.addEventListener('keydown', escHandler);
+
+    function closePopup() {
+      popupShown = false; // Reset flag so popup can show again
+      backdrop.style.animation = 'fadeOut 0.3s ease-out';
+      setTimeout(() => {
+        if (backdrop.parentNode) {
+          backdrop.parentNode.removeChild(backdrop);
+        }
+        document.body.style.overflow = '';
+      }, 300);
+    }
   }
 })();
