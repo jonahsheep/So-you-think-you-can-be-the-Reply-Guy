@@ -113,6 +113,8 @@ chrome.alarms.onAlarm.addListener((a) => {
   if (a.name === "dailyCheck") checkDailyReset();
 });
 
+// --- 4. NAVIGATION BLOCKING ---
+
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type === 'increment') {
     (async () => {
