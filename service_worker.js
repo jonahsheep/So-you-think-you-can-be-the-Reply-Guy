@@ -118,6 +118,9 @@ chrome.alarms.onAlarm.addListener((a) => {
 chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
   // Only check top-level navigation (not iframes)
   if (details.frameId !== 0) return;
+
+  const url = new URL(details.url);
+  const currentIsX = url.hostname.includes('x.com') || url.hostname.includes('twitter.com');
 });
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
