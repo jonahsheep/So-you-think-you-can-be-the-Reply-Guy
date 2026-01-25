@@ -124,7 +124,13 @@ chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
 
   // If navigating away from X/Twitter
   if (!currentIsX) {
-    // Blocking logic to follow
+    try {
+      const data = await chrome.storage.sync.get(["count", "requiredReplies"]);
+      const count = (data && data.count) ? data.count : 0;
+      const required = (data && data.requiredReplies) ? data.requiredReplies : DEFAULT_REQUIRED;
+    } catch (e) {
+      console.error("Navigation blocking error:", e);
+    }
   }
 });
 
