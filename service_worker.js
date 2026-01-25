@@ -128,6 +128,12 @@ chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
       const data = await chrome.storage.sync.get(["count", "requiredReplies"]);
       const count = (data && data.count) ? data.count : 0;
       const required = (data && data.requiredReplies) ? data.requiredReplies : DEFAULT_REQUIRED;
+
+      // If quota not met, redirect back to X
+      if (count < required) {
+        const roast = ROASTS[Math.floor(Math.random() * ROASTS.length)];
+        // Notification and redirect to follow
+      }
     } catch (e) {
       console.error("Navigation blocking error:", e);
     }
