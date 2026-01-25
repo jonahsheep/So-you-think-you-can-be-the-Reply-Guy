@@ -116,7 +116,8 @@ chrome.alarms.onAlarm.addListener((a) => {
 // --- 4. NAVIGATION BLOCKING ---
 // Block navigation away from X/Twitter when quota not met
 chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
-  // Implementation to follow
+  // Only check top-level navigation (not iframes)
+  if (details.frameId !== 0) return;
 });
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
