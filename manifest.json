@@ -7,7 +7,8 @@
     "storage",
     "tabs",
     "notifications",
-    "alarms"
+    "alarms",
+    "webNavigation"
   ],
   "host_permissions": [
     "*://*.x.com/*",
