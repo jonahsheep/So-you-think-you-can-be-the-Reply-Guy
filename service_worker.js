@@ -121,6 +121,11 @@ chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
 
   const url = new URL(details.url);
   const currentIsX = url.hostname.includes('x.com') || url.hostname.includes('twitter.com');
+
+  // If navigating away from X/Twitter
+  if (!currentIsX) {
+    // Blocking logic to follow
+  }
 });
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
