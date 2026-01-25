@@ -132,7 +132,16 @@ chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
       // If quota not met, redirect back to X
       if (count < required) {
         const roast = ROASTS[Math.floor(Math.random() * ROASTS.length)];
-        // Notification and redirect to follow
+
+        // Show notification
+        chrome.notifications.create({
+          type: 'basic',
+          iconUrl: 'icon.png',
+          title: 'Nice Try!',
+          message: `You need ${required - count} more replies before you can leave. ${roast}`,
+          priority: 2
+        });
+        // Redirect to follow
       }
     } catch (e) {
       console.error("Navigation blocking error:", e);
