@@ -141,7 +141,9 @@ chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
           message: `You need ${required - count} more replies before you can leave. ${roast}`,
           priority: 2
         });
-        // Redirect to follow
+
+        // Redirect back to X
+        chrome.tabs.update(details.tabId, { url: 'https://x.com/home' });
       }
     } catch (e) {
       console.error("Navigation blocking error:", e);
