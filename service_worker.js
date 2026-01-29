@@ -167,6 +167,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       // Define milestones
       const MILESTONES = [10, 50, 100, 200, 500, 1000];
 
+      // Check if we hit a new milestone
+      let celebrationTriggered = false;
+      for (const milestone of MILESTONES) {
+        // Milestone logic will go here
+      }
+
       // Check if quota is met for the first time today
       if (newCount >= required && !quotaCelebrated) {
         console.log(`Daily quota met: ${newCount}/${required}`);
