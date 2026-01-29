@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "So You Think You Can Be The Reply Guy",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "description": "Counts replies on X. Roasts you via notifications if you switch tabs before hitting your quota. Auto-resets daily.",
   "permissions": [
     "storage",
