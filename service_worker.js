@@ -174,6 +174,22 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           console.log(`Milestone achieved: ${milestone} replies!`);
           celebratedMilestones.push(milestone);
           await chrome.storage.sync.set({ celebratedMilestones });
+
+          // Show milestone celebration in active tab
+          const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+          if (tabs.length > 0) {
+            try {
+              await chrome.tabs.sendMessage(tabs[0].id, {
+                type: 'SHOW_CELEBRATION',
+                milestone: milestone,
+                totalCount: newCount,
+                isQuota: false
+              });
+              celebrationTriggered = true;
+            } catch (e) {
+              console.log("Could not send milestone celebration:", e);
+            }
+          }
           break; // Only celebrate one milestone at a time
         }
       }
