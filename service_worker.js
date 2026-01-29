@@ -170,7 +170,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       // Check if we hit a new milestone
       let celebrationTriggered = false;
       for (const milestone of MILESTONES) {
-        // Milestone logic will go here
+        if (newCount === milestone && !celebratedMilestones.includes(milestone)) {
+          console.log(`Milestone achieved: ${milestone} replies!`);
+          celebratedMilestones.push(milestone);
+          await chrome.storage.sync.set({ celebratedMilestones });
+          break; // Only celebrate one milestone at a time
+        }
       }
 
       // Check if quota is met for the first time today
