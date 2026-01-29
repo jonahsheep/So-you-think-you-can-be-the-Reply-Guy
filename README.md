@@ -22,6 +22,7 @@ Then congratulations. You’ve found your calling.
 
 - ✔️ **Counts your actual replies** (by detecting the “Replying to” interface on X)  
 - ✔️ **Custom daily reply quota**  
+- ✔️ **Milestone celebrations** at 10, 50, 100, 200, 500, and 1000 replies
 - ✔️ **Warning block** with roast message when you try to leave  
 - ✔️ **Random Reply Guy quotes**  
 - ✔️ **Badge counter** showing progress  
