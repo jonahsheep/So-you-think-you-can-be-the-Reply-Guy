@@ -15,11 +15,6 @@
   });
 
   function showRoastPopup(roast, count, required) {
-    // Don't show on X/Twitter pages
-    if (window.location.hostname.includes('x.com') || window.location.hostname.includes('twitter.com')) {
-      return;
-    }
-
     // Create backdrop
     const backdrop = document.createElement('div');
     backdrop.id = 'reply-guy-roast-backdrop';
