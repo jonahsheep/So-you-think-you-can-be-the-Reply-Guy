@@ -164,6 +164,9 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       await chrome.storage.sync.set({ count: newCount });
       updateBadge();
 
+      // Define milestones
+      const MILESTONES = [10, 50, 100, 200, 500, 1000];
+
       // Check if quota is met for the first time today
       if (newCount >= required && !quotaCelebrated) {
         console.log(`Daily quota met: ${newCount}/${required}`);
