@@ -70,6 +70,15 @@ The extension should now appear with its little badge counter.
 
 ## 📝 Changelog
 
+### v3.2.2 (2026-01-29)
+- **New Features**:
+  - Added milestone celebrations at 10, 50, 100, 200, 500, and 1000 replies
+  - Celebration popups now show for both milestones and daily quota completion
+  - Milestone tracking persists across sessions
+- **Bug Fixes**:
+  - Fixed roast popup not appearing when switching tabs on X.com
+  - Prevented duplicate celebrations when milestone and quota align
+
 ### v3.2.1 (2026-01-15)
 - **Security & Compliance**: Removed excess permissions for Chrome Web Store compliance
   - Removed unused `activeTab` permission
