@@ -194,8 +194,8 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         }
       }
 
-      // Check if quota is met for the first time today
-      if (newCount >= required && !quotaCelebrated) {
+      // Check if quota is met for the first time today (only if no milestone was celebrated)
+      if (!celebrationTriggered && newCount >= required && !quotaCelebrated) {
         console.log(`Daily quota met: ${newCount}/${required}`);
         await chrome.storage.sync.set({ quotaCelebrated: true });
 
