@@ -155,10 +155,11 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type === 'increment') {
     (async () => {
       await checkDailyReset();
-      const data = await chrome.storage.sync.get(["count", "requiredReplies", "quotaCelebrated"]);
+      const data = await chrome.storage.sync.get(["count", "requiredReplies", "quotaCelebrated", "celebratedMilestones"]);
       const newCount = ((data && data.count) ? data.count : 0) + 1;
       const required = (data && data.requiredReplies) ? data.requiredReplies : DEFAULT_REQUIRED;
       const quotaCelebrated = data.quotaCelebrated || false;
+      const celebratedMilestones = data.celebratedMilestones || [];
 
       await chrome.storage.sync.set({ count: newCount });
       updateBadge();
