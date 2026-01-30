@@ -115,7 +115,8 @@ chrome.alarms.onAlarm.addListener((a) => {
 });
 
 // --- 4. NAVIGATION BLOCKING ---
-// Block navigation away from X/Twitter when quota not met
+// Block navigation away from X/Twitter when quota not met (Hard Mode)
+// Or show notification only (Easy Mode)
 chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
   // Only check top-level navigation (not iframes)
   if (details.frameId !== 0) return;
@@ -126,25 +127,30 @@ chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
   // If navigating away from X/Twitter
   if (!currentIsX) {
     try {
-      const data = await chrome.storage.sync.get(["count", "requiredReplies"]);
+      const data = await chrome.storage.sync.get(["count", "requiredReplies", "mode"]);
       const count = (data && data.count) ? data.count : 0;
       const required = (data && data.requiredReplies) ? data.requiredReplies : DEFAULT_REQUIRED;
+      const mode = data.mode || 'hard';
 
-      // If quota not met, redirect back to X
+      // If quota not met
       if (count < required) {
         const roast = ROASTS[Math.floor(Math.random() * ROASTS.length)];
 
-        // Show notification
+        // Show notification in both modes
         chrome.notifications.create({
           type: 'basic',
           iconUrl: 'icon.png',
-          title: 'Nice Try!',
-          message: `You need ${required - count} more replies before you can leave. ${roast}`,
+          title: mode === 'hard' ? 'Nice Try!' : 'Hey, Wait!',
+          message: mode === 'hard'
+            ? `You need ${required - count} more replies before you can leave. ${roast}`
+            : `You still need ${required - count} more replies. ${roast}`,
           priority: 2
         });
 
-        // Redirect back to X
-        chrome.tabs.update(details.tabId, { url: 'https://x.com/home' });
+        // Only block navigation in hard mode
+        if (mode === 'hard') {
+          chrome.tabs.update(details.tabId, { url: 'https://x.com/home' });
+        }
       }
     } catch (e) {
       console.error("Navigation blocking error:", e);
