@@ -4,6 +4,9 @@ const badgeEl = document.getElementById('progressBadge');
 const saveBtn = document.getElementById('saveBtn');
 const resetBtn = document.getElementById('resetBtn');
 const statusMsg = document.getElementById('statusMsg');
+const easyModeBtn = document.getElementById('easyModeBtn');
+const hardModeBtn = document.getElementById('hardModeBtn');
+const modeDesc = document.getElementById('modeDesc');
 
 // Helper to show transient status
 function showMsg(text) {
@@ -28,9 +31,36 @@ function updateUI(count, required) {
 }
 
 async function load() {
-  const data = await chrome.storage.sync.get(['requiredReplies', 'count']);
+  const data = await chrome.storage.sync.get(['requiredReplies', 'count', 'mode']);
+  const mode = data.mode || 'hard'; // Default to hard mode
   updateUI(data.count || 0, data.requiredReplies || 3);
+  updateModeUI(mode);
 }
+
+function updateModeUI(mode) {
+  if (mode === 'easy') {
+    easyModeBtn.classList.add('active');
+    hardModeBtn.classList.remove('active');
+    modeDesc.textContent = 'Prompts you when leaving X before quota is met';
+  } else {
+    hardModeBtn.classList.add('active');
+    easyModeBtn.classList.remove('active');
+    modeDesc.textContent = 'Blocks navigation away from X until quota is met';
+  }
+}
+
+// Mode selection handlers
+easyModeBtn.addEventListener('click', async () => {
+  await chrome.storage.sync.set({ mode: 'easy' });
+  updateModeUI('easy');
+  showMsg('Mode Updated');
+});
+
+hardModeBtn.addEventListener('click', async () => {
+  await chrome.storage.sync.set({ mode: 'hard' });
+  updateModeUI('hard');
+  showMsg('Mode Updated');
+});
 
 saveBtn.addEventListener('click', async () => {
   let val = parseInt(requiredEl.value, 10);
