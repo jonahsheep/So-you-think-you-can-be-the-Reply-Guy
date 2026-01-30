@@ -49,11 +49,12 @@ async function checkDailyReset() {
 
 async function ensureDefaults() {
   try {
-    const data = await chrome.storage.sync.get(["requiredReplies", "count", "lastResetDate"]);
+    const data = await chrome.storage.sync.get(["requiredReplies", "count", "lastResetDate", "mode"]);
     const updates = {};
     if (!data.requiredReplies) updates.requiredReplies = DEFAULT_REQUIRED;
     if (data.count === undefined) updates.count = 0;
     if (!data.lastResetDate) updates.lastResetDate = isoDateToday();
+    if (!data.mode) updates.mode = 'hard'; // Default to hard mode
 
     if (Object.keys(updates).length > 0) {
       await chrome.storage.sync.set(updates);
