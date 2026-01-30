@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Reply Guy Settings</title>
@@ -15,7 +16,8 @@
     }
 
     body {
-      width: 380px; /* FIXED WIDTH */
+      width: 380px;
+      /* FIXED WIDTH */
       margin: 0;
       padding: 20px;
       box-sizing: border-box;
@@ -29,14 +31,24 @@
       align-items: center;
       gap: 12px;
       margin-bottom: 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       padding-bottom: 15px;
     }
 
-    .icon { font-size: 24px; }
+    .icon {
+      font-size: 24px;
+    }
 
-    h1 { font-size: 16px; margin: 0; }
-    p.subtitle { font-size: 12px; color: var(--text-muted); margin: 2px 0 0 0; }
+    h1 {
+      font-size: 16px;
+      margin: 0;
+    }
+
+    p.subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin: 2px 0 0 0;
+    }
 
     .row {
       display: flex;
@@ -49,8 +61,8 @@
     }
 
     input[type="number"] {
-      background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       color: #fff;
       border-radius: 4px;
       padding: 5px;
@@ -66,7 +78,11 @@
       background: rgba(255, 95, 87, 0.15);
       color: var(--danger);
     }
-    .badge.success { background: rgba(76, 175, 80, 0.15); color: var(--success); }
+
+    .badge.success {
+      background: rgba(76, 175, 80, 0.15);
+      color: var(--success);
+    }
 
     button {
       width: 100%;
@@ -78,8 +94,16 @@
       margin-top: 5px;
     }
 
-    #saveBtn { background: var(--accent); color: #fff; margin-bottom: 8px; }
-    #resetBtn { background: rgba(255,255,255,0.08); color: var(--text-muted); }
+    #saveBtn {
+      background: var(--accent);
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    #resetBtn {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+    }
 
     #statusMsg {
       text-align: center;
@@ -89,9 +113,70 @@
       opacity: 0;
       transition: opacity 0.3s;
     }
-    #statusMsg.visible { opacity: 1; }
+
+    #statusMsg.visible {
+      opacity: 1;
+    }
+
+    .mode-selector {
+      display: flex;
+      gap: 8px;
+    }
+
+    .mode-btn {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.2);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .mode-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .mode-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .mode-btn[data-mode="hard"].active {
+      background: var(--danger);
+      border-color: var(--danger);
+    }
+
+    .mode-icon {
+      font-size: 16px;
+    }
+
+    .mode-description {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 10px 12px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .mode-description p {
+      margin: 0;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
   </style>
 </head>
+
 <body>
   <header>
     <div class="icon"></div>
@@ -100,6 +185,24 @@
       <p class="subtitle">Quota management</p>
     </div>
   </header>
+
+  <div class="row">
+    <span>Mode</span>
+    <div class="mode-selector">
+      <button class="mode-btn active" data-mode="easy" id="easyModeBtn">
+        <span class="mode-icon">🟢</span>
+        <span>Easy Mode</span>
+      </button>
+      <button class="mode-btn" data-mode="hard" id="hardModeBtn">
+        <span class="mode-icon">🔴</span>
+        <span>Hard Mode</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mode-description">
+    <p id="modeDesc">Prompts you when leaving X before quota is met</p>
+  </div>
 
   <div class="row">
     <span>Daily Quota</span>
@@ -122,4 +225,5 @@
 
   <script src="options.js"></script>
 </body>
+
 </html>
