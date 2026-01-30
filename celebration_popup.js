@@ -37,15 +37,15 @@
     const popup = document.createElement('div');
     popup.id = 'reply-guy-celebration-popup';
     popup.style.cssText = `
-      background: linear-gradient(135deg, #1a1a1a 0%, #2d1a3d 50%, #1a1a1a 100%);
-      border: 3px solid #9ece6a;
-      border-radius: 24px;
-      padding: 50px;
-      max-width: 550px;
+      background: #1a1a1b;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 480px;
       width: 90%;
-      box-shadow: 0 30px 90px rgba(158, 206, 106, 0.5);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
       text-align: center;
-      animation: celebrationPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      animation: modalSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
       overflow: hidden;
     `;
