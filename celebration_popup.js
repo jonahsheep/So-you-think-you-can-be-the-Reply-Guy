@@ -63,19 +63,19 @@
     `;
 
     // Generate confetti inside popup
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 12; i++) {
       const confetti = document.createElement('div');
-      const colors = ['#9ece6a', '#2eaadc', '#ff5f57', '#f7768e', '#bb9af7', '#ffd700', '#ff6b6b', '#4ecdc4'];
+      const colors = ['#2eaadc', '#f7768e', '#9ece6a', '#bb9af7'];
       confetti.style.cssText = `
         position: absolute;
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
         background: ${colors[Math.floor(Math.random() * colors.length)]};
-        top: -20px;
+        top: -10px;
         left: ${Math.random() * 100}%;
-        animation: confettiFall ${2 + Math.random() * 2}s linear infinite;
+        animation: particleFloat ${3 + Math.random() * 2}s linear infinite;
         animation-delay: ${Math.random() * 2}s;
-        opacity: 0.8;
+        opacity: 0.6;
         border-radius: 50%;
       `;
       confettiContainer.appendChild(confetti);
@@ -95,25 +95,23 @@
       z-index: 2147483646;
     `;
 
-    // Generate many confetti particles across the entire screen
-    for (let i = 0; i < 100; i++) {
+    // Generate subtle fullscreen particles
+    for (let i = 0; i < 40; i++) {
       const particle = document.createElement('div');
-      const colors = ['#9ece6a', '#2eaadc', '#ff5f57', '#f7768e', '#bb9af7', '#ffd700', '#ff6b6b', '#4ecdc4', '#ffdd57', '#00d4ff'];
-      const size = 8 + Math.random() * 12;
-      const shapes = ['50%', '0%']; // circle or square
+      const colors = ['#2eaadc', '#f7768e', '#9ece6a', '#bb9af7'];
+      const size = 6 + Math.random() * 8;
 
       particle.style.cssText = `
         position: absolute;
         width: ${size}px;
         height: ${size}px;
         background: ${colors[Math.floor(Math.random() * colors.length)]};
-        top: -50px;
+        top: -20px;
         left: ${Math.random() * 100}%;
-        animation: fullscreenConfettiFall ${3 + Math.random() * 4}s linear infinite;
+        animation: particleFloat ${4 + Math.random() * 4}s linear infinite;
         animation-delay: ${Math.random() * 3}s;
-        opacity: ${0.6 + Math.random() * 0.4};
-        border-radius: ${shapes[Math.floor(Math.random() * shapes.length)]};
-        transform: rotate(${Math.random() * 360}deg);
+        opacity: ${0.2 + Math.random() * 0.3};
+        border-radius: 50%;
       `;
       fullscreenConfetti.appendChild(particle);
     }
