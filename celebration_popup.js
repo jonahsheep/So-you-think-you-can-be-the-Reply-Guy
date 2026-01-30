@@ -290,47 +290,28 @@
         from { opacity: 1; }
         to { opacity: 0; }
       }
-      @keyframes celebrationPop {
+      @keyframes modalSlideUp {
         0% {
           opacity: 0;
-          transform: scale(0.5) rotate(-5deg);
-        }
-        50% {
-          transform: scale(1.05) rotate(2deg);
+          transform: translateY(30px) scale(0.98);
         }
         100% {
           opacity: 1;
-          transform: scale(1) rotate(0deg);
+          transform: translateY(0) scale(1);
         }
       }
-      @keyframes bounce {
+      @keyframes floatEmoji {
         0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-20px); }
+        50% { transform: translateY(-10px); }
       }
-      @keyframes confettiFall {
+      @keyframes particleFloat {
         0% {
-          top: -20px;
+          transform: translateY(0) rotate(0deg);
           opacity: 1;
         }
         100% {
-          top: 100%;
-          opacity: 0.2;
-          transform: rotate(720deg);
-        }
-      }
-      @keyframes fullscreenConfettiFall {
-        0% {
-          top: -50px;
-          opacity: 1;
-          transform: translateX(0) rotate(0deg);
-        }
-        50% {
-          opacity: 0.8;
-        }
-        100% {
-          top: 110vh;
+          transform: translateY(100vh) rotate(360deg);
           opacity: 0;
-          transform: translateX(${Math.random() > 0.5 ? '' : '-'}${100 + Math.random() * 200}px) rotate(${720 + Math.random() * 360}deg);
         }
       }
     `;
