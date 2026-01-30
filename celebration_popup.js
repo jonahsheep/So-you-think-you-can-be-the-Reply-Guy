@@ -167,16 +167,15 @@
     };
 
     if (isQuota) {
-      message.textContent = "Great job! You've hit your daily quota. Keep the momentum going! 🎯";
+      message.textContent = "Daily quota reached. Momentum is key.";
     } else {
-      message.textContent = messages[milestone] || "Incredible achievement! Keep crushing it!";
+      message.textContent = messages[milestone] || "Incredible achievement. Keep it up.";
     }
     message.style.cssText = `
-      color: #a9b1d6;
-      font-size: 16px;
-      margin: 0 0 40px 0;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 14px;
+      margin: 0 0 32px 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-style: italic;
       position: relative;
       z-index: 1;
     `;
@@ -185,32 +184,22 @@
     const shareBtn = document.createElement('button');
     shareBtn.textContent = '🐦 Share on X';
     shareBtn.style.cssText = `
-      background: linear-gradient(135deg, #2eaadc 0%, #1d9bc7 100%);
-      color: white;
+      background: #fff;
+      color: #000;
       border: none;
-      padding: 18px 50px;
-      font-size: 18px;
-      font-weight: 700;
-      border-radius: 12px;
+      padding: 14px 28px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 10px;
       cursor: pointer;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      transition: all 0.3s ease;
-      box-shadow: 0 6px 20px rgba(46, 170, 220, 0.4);
-      margin-right: 15px;
+      transition: opacity 0.2s ease;
       position: relative;
       z-index: 1;
     `;
 
-    shareBtn.onmouseover = () => {
-      shareBtn.style.background = 'linear-gradient(135deg, #3cc1f0 0%, #2eaadc 100%)';
-      shareBtn.style.transform = 'scale(1.05) translateY(-2px)';
-      shareBtn.style.boxShadow = '0 8px 25px rgba(46, 170, 220, 0.6)';
-    };
-    shareBtn.onmouseout = () => {
-      shareBtn.style.background = 'linear-gradient(135deg, #2eaadc 0%, #1d9bc7 100%)';
-      shareBtn.style.transform = 'scale(1)';
-      shareBtn.style.boxShadow = '0 6px 20px rgba(46, 170, 220, 0.4)';
-    };
+    shareBtn.onmouseover = () => { shareBtn.style.opacity = '0.9'; };
+    shareBtn.onmouseout = () => { shareBtn.style.opacity = '1'; };
 
     shareBtn.onclick = () => {
       const shareText = `I just finished ${milestone} replies today! 🎉 #ReplyGuy #XGrind`;
@@ -223,30 +212,22 @@
     const dismissBtn = document.createElement('button');
     dismissBtn.textContent = 'Continue Grinding';
     dismissBtn.style.cssText = `
-      background: rgba(255, 255, 255, 0.1);
-      color: #a9b1d6;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      padding: 18px 50px;
-      font-size: 18px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 14px 28px;
+      font-size: 15px;
       font-weight: 600;
-      border-radius: 12px;
+      border-radius: 10px;
       cursor: pointer;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      transition: all 0.3s ease;
+      transition: background 0.2s ease;
       position: relative;
       z-index: 1;
     `;
 
-    dismissBtn.onmouseover = () => {
-      dismissBtn.style.background = 'rgba(255, 255, 255, 0.15)';
-      dismissBtn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-      dismissBtn.style.transform = 'scale(1.05)';
-    };
-    dismissBtn.onmouseout = () => {
-      dismissBtn.style.background = 'rgba(255, 255, 255, 0.1)';
-      dismissBtn.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-      dismissBtn.style.transform = 'scale(1)';
-    };
+    dismissBtn.onmouseover = () => { dismissBtn.style.background = 'rgba(255, 255, 255, 0.1)'; };
+    dismissBtn.onmouseout = () => { dismissBtn.style.background = 'rgba(255, 255, 255, 0.05)'; };
 
     dismissBtn.onclick = closePopup;
 
