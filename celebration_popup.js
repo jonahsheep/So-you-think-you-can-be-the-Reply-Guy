@@ -120,43 +120,40 @@
     backdrop.appendChild(fullscreenConfetti);
 
     // Create content
-    const emoji = document.createElement('div');
-    emoji.textContent = '🎉';
+    emoji.textContent = '🦄';
     emoji.style.cssText = `
-      font-size: 80px;
-      margin-bottom: 20px;
-      animation: bounce 0.8s ease-in-out infinite;
+      font-size: 64px;
+      margin-bottom: 16px;
+      animation: floatEmoji 3s ease-in-out infinite;
       position: relative;
       z-index: 1;
     `;
 
     const title = document.createElement('h1');
-    title.textContent = isQuota ? 'QUOTA ACHIEVED!' : 'MILESTONE ACHIEVED!';
+    title.textContent = isQuota ? 'Quota Achieved' : 'Milestone Hit';
     title.style.cssText = `
-      color: #9ece6a;
-      font-size: 32px;
-      margin: 0 0 15px 0;
+      color: #fff;
+      font-size: 24px;
+      margin: 0 0 12px 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      text-shadow: 0 0 20px rgba(158, 206, 106, 0.5);
+      font-weight: 700;
+      letter-spacing: -0.5px;
       position: relative;
       z-index: 1;
     `;
 
     const milestone_text = document.createElement('p');
     if (isQuota) {
-      milestone_text.innerHTML = `You've completed your <span style="color: #2eaadc; font-weight: 700; font-size: 48px;">${milestone}</span> daily replies!`;
+      milestone_text.innerHTML = `You've completed your <span style=\"color: var(--accent, #2eaadc); font-weight: 700; font-size: 36px;\">${milestone}</span> daily replies`;
     } else {
-      milestone_text.innerHTML = `You've completed <span style="color: #2eaadc; font-weight: 700; font-size: 48px;">${milestone}</span> replies!`;
+      milestone_text.innerHTML = `You've completed <span style=\"color: var(--accent, #2eaadc); font-weight: 700; font-size: 36px;\">${milestone}</span> replies`;
     }
     milestone_text.style.cssText = `
-      color: #ececec;
-      font-size: 24px;
-      margin: 0 0 30px 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 20px;
+      margin: 0 0 24px 0;
+      font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif;
+      line-height: 1.4;
       position: relative;
       z-index: 1;
     `;
