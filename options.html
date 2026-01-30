@@ -117,6 +117,63 @@
     #statusMsg.visible {
       opacity: 1;
     }
+
+    .mode-selector {
+      display: flex;
+      gap: 8px;
+    }
+
+    .mode-btn {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.2);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .mode-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .mode-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .mode-btn[data-mode="hard"].active {
+      background: var(--danger);
+      border-color: var(--danger);
+    }
+
+    .mode-icon {
+      font-size: 16px;
+    }
+
+    .mode-description {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 10px 12px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .mode-description p {
+      margin: 0;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
   </style>
 </head>
 
