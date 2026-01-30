@@ -37,15 +37,15 @@
     const popup = document.createElement('div');
     popup.id = 'reply-guy-celebration-popup';
     popup.style.cssText = `
-      background: linear-gradient(135deg, #1a1a1a 0%, #2d1a3d 50%, #1a1a1a 100%);
-      border: 3px solid #9ece6a;
-      border-radius: 24px;
-      padding: 50px;
-      max-width: 550px;
+      background: #1a1a1b;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 480px;
       width: 90%;
-      box-shadow: 0 30px 90px rgba(158, 206, 106, 0.5);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
       text-align: center;
-      animation: celebrationPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      animation: modalSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
       overflow: hidden;
     `;
@@ -63,19 +63,19 @@
     `;
 
     // Generate confetti inside popup
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 12; i++) {
       const confetti = document.createElement('div');
-      const colors = ['#9ece6a', '#2eaadc', '#ff5f57', '#f7768e', '#bb9af7', '#ffd700', '#ff6b6b', '#4ecdc4'];
+      const colors = ['#2eaadc', '#f7768e', '#9ece6a', '#bb9af7'];
       confetti.style.cssText = `
         position: absolute;
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
         background: ${colors[Math.floor(Math.random() * colors.length)]};
-        top: -20px;
+        top: -10px;
         left: ${Math.random() * 100}%;
-        animation: confettiFall ${2 + Math.random() * 2}s linear infinite;
+        animation: particleFloat ${3 + Math.random() * 2}s linear infinite;
         animation-delay: ${Math.random() * 2}s;
-        opacity: 0.8;
+        opacity: 0.6;
         border-radius: 50%;
       `;
       confettiContainer.appendChild(confetti);
@@ -95,68 +95,63 @@
       z-index: 2147483646;
     `;
 
-    // Generate many confetti particles across the entire screen
-    for (let i = 0; i < 100; i++) {
+    // Generate subtle fullscreen particles
+    for (let i = 0; i < 40; i++) {
       const particle = document.createElement('div');
-      const colors = ['#9ece6a', '#2eaadc', '#ff5f57', '#f7768e', '#bb9af7', '#ffd700', '#ff6b6b', '#4ecdc4', '#ffdd57', '#00d4ff'];
-      const size = 8 + Math.random() * 12;
-      const shapes = ['50%', '0%']; // circle or square
+      const colors = ['#2eaadc', '#f7768e', '#9ece6a', '#bb9af7'];
+      const size = 6 + Math.random() * 8;
 
       particle.style.cssText = `
         position: absolute;
         width: ${size}px;
         height: ${size}px;
         background: ${colors[Math.floor(Math.random() * colors.length)]};
-        top: -50px;
+        top: -20px;
         left: ${Math.random() * 100}%;
-        animation: fullscreenConfettiFall ${3 + Math.random() * 4}s linear infinite;
+        animation: particleFloat ${4 + Math.random() * 4}s linear infinite;
         animation-delay: ${Math.random() * 3}s;
-        opacity: ${0.6 + Math.random() * 0.4};
-        border-radius: ${shapes[Math.floor(Math.random() * shapes.length)]};
-        transform: rotate(${Math.random() * 360}deg);
+        opacity: ${0.2 + Math.random() * 0.3};
+        border-radius: 50%;
       `;
       fullscreenConfetti.appendChild(particle);
     }
     backdrop.appendChild(fullscreenConfetti);
 
     // Create content
-    const emoji = document.createElement('div');
-    emoji.textContent = '🎉';
+    emoji.textContent = '🦄';
     emoji.style.cssText = `
-      font-size: 80px;
-      margin-bottom: 20px;
-      animation: bounce 0.8s ease-in-out infinite;
+      font-size: 64px;
+      margin-bottom: 16px;
+      animation: floatEmoji 3s ease-in-out infinite;
       position: relative;
       z-index: 1;
     `;
 
     const title = document.createElement('h1');
-    title.textContent = isQuota ? 'QUOTA ACHIEVED!' : 'MILESTONE ACHIEVED!';
+    title.textContent = isQuota ? 'Quota Achieved' : 'Milestone Hit';
     title.style.cssText = `
-      color: #9ece6a;
-      font-size: 32px;
-      margin: 0 0 15px 0;
+      color: #fff;
+      font-size: 24px;
+      margin: 0 0 12px 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      text-shadow: 0 0 20px rgba(158, 206, 106, 0.5);
+      font-weight: 700;
+      letter-spacing: -0.5px;
       position: relative;
       z-index: 1;
     `;
 
     const milestone_text = document.createElement('p');
     if (isQuota) {
-      milestone_text.innerHTML = `You've completed your <span style="color: #2eaadc; font-weight: 700; font-size: 48px;">${milestone}</span> daily replies!`;
+      milestone_text.innerHTML = `You've completed your <span style=\"color: var(--accent, #2eaadc); font-weight: 700; font-size: 36px;\">${milestone}</span> daily replies`;
     } else {
-      milestone_text.innerHTML = `You've completed <span style="color: #2eaadc; font-weight: 700; font-size: 48px;">${milestone}</span> replies!`;
+      milestone_text.innerHTML = `You've completed <span style=\"color: var(--accent, #2eaadc); font-weight: 700; font-size: 36px;\">${milestone}</span> replies`;
     }
     milestone_text.style.cssText = `
-      color: #ececec;
-      font-size: 24px;
-      margin: 0 0 30px 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 20px;
+      margin: 0 0 24px 0;
+      font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif;
+      line-height: 1.4;
       position: relative;
       z-index: 1;
     `;
@@ -172,16 +167,15 @@
     };
 
     if (isQuota) {
-      message.textContent = "Great job! You've hit your daily quota. Keep the momentum going! 🎯";
+      message.textContent = "Daily quota reached. Momentum is key.";
     } else {
-      message.textContent = messages[milestone] || "Incredible achievement! Keep crushing it!";
+      message.textContent = messages[milestone] || "Incredible achievement. Keep it up.";
     }
     message.style.cssText = `
-      color: #a9b1d6;
-      font-size: 16px;
-      margin: 0 0 40px 0;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 14px;
+      margin: 0 0 32px 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-style: italic;
       position: relative;
       z-index: 1;
     `;
@@ -190,32 +184,22 @@
     const shareBtn = document.createElement('button');
     shareBtn.textContent = '🐦 Share on X';
     shareBtn.style.cssText = `
-      background: linear-gradient(135deg, #2eaadc 0%, #1d9bc7 100%);
-      color: white;
+      background: #fff;
+      color: #000;
       border: none;
-      padding: 18px 50px;
-      font-size: 18px;
-      font-weight: 700;
-      border-radius: 12px;
+      padding: 14px 28px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 10px;
       cursor: pointer;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      transition: all 0.3s ease;
-      box-shadow: 0 6px 20px rgba(46, 170, 220, 0.4);
-      margin-right: 15px;
+      transition: opacity 0.2s ease;
       position: relative;
       z-index: 1;
     `;
 
-    shareBtn.onmouseover = () => {
-      shareBtn.style.background = 'linear-gradient(135deg, #3cc1f0 0%, #2eaadc 100%)';
-      shareBtn.style.transform = 'scale(1.05) translateY(-2px)';
-      shareBtn.style.boxShadow = '0 8px 25px rgba(46, 170, 220, 0.6)';
-    };
-    shareBtn.onmouseout = () => {
-      shareBtn.style.background = 'linear-gradient(135deg, #2eaadc 0%, #1d9bc7 100%)';
-      shareBtn.style.transform = 'scale(1)';
-      shareBtn.style.boxShadow = '0 6px 20px rgba(46, 170, 220, 0.4)';
-    };
+    shareBtn.onmouseover = () => { shareBtn.style.opacity = '0.9'; };
+    shareBtn.onmouseout = () => { shareBtn.style.opacity = '1'; };
 
     shareBtn.onclick = () => {
       const shareText = `I just finished ${milestone} replies today! 🎉 #ReplyGuy #XGrind`;
@@ -228,30 +212,22 @@
     const dismissBtn = document.createElement('button');
     dismissBtn.textContent = 'Continue Grinding';
     dismissBtn.style.cssText = `
-      background: rgba(255, 255, 255, 0.1);
-      color: #a9b1d6;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      padding: 18px 50px;
-      font-size: 18px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 14px 28px;
+      font-size: 15px;
       font-weight: 600;
-      border-radius: 12px;
+      border-radius: 10px;
       cursor: pointer;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      transition: all 0.3s ease;
+      transition: background 0.2s ease;
       position: relative;
       z-index: 1;
     `;
 
-    dismissBtn.onmouseover = () => {
-      dismissBtn.style.background = 'rgba(255, 255, 255, 0.15)';
-      dismissBtn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-      dismissBtn.style.transform = 'scale(1.05)';
-    };
-    dismissBtn.onmouseout = () => {
-      dismissBtn.style.background = 'rgba(255, 255, 255, 0.1)';
-      dismissBtn.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-      dismissBtn.style.transform = 'scale(1)';
-    };
+    dismissBtn.onmouseover = () => { dismissBtn.style.background = 'rgba(255, 255, 255, 0.1)'; };
+    dismissBtn.onmouseout = () => { dismissBtn.style.background = 'rgba(255, 255, 255, 0.05)'; };
 
     dismissBtn.onclick = closePopup;
 
@@ -290,47 +266,28 @@
         from { opacity: 1; }
         to { opacity: 0; }
       }
-      @keyframes celebrationPop {
+      @keyframes modalSlideUp {
         0% {
           opacity: 0;
-          transform: scale(0.5) rotate(-5deg);
-        }
-        50% {
-          transform: scale(1.05) rotate(2deg);
+          transform: translateY(30px) scale(0.98);
         }
         100% {
           opacity: 1;
-          transform: scale(1) rotate(0deg);
+          transform: translateY(0) scale(1);
         }
       }
-      @keyframes bounce {
+      @keyframes floatEmoji {
         0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-20px); }
+        50% { transform: translateY(-10px); }
       }
-      @keyframes confettiFall {
+      @keyframes particleFloat {
         0% {
-          top: -20px;
+          transform: translateY(0) rotate(0deg);
           opacity: 1;
         }
         100% {
-          top: 100%;
-          opacity: 0.2;
-          transform: rotate(720deg);
-        }
-      }
-      @keyframes fullscreenConfettiFall {
-        0% {
-          top: -50px;
-          opacity: 1;
-          transform: translateX(0) rotate(0deg);
-        }
-        50% {
-          opacity: 0.8;
-        }
-        100% {
-          top: 110vh;
+          transform: translateY(100vh) rotate(360deg);
           opacity: 0;
-          transform: translateX(${Math.random() > 0.5 ? '' : '-'}${100 + Math.random() * 200}px) rotate(${720 + Math.random() * 360}deg);
         }
       }
     `;
