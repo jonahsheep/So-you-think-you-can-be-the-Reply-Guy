@@ -107,24 +107,67 @@
       display: inline-block;
     `;
 
-    const button = document.createElement('button');
-    button.textContent = 'Get Back to X';
-    button.style.cssText = `
+    const buttonContainer = document.createElement('div');
+    buttonContainer.style.cssText = `
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    `;
+
+    const goBackButton = document.createElement('button');
+    goBackButton.textContent = 'Fine, I\'ll Go to X';
+    goBackButton.style.cssText = `
       background: #ff5f57;
       color: white;
       border: none;
-      padding: 15px 40px;
-      font-size: 16px;
-      font-weight: 600;
-      border-radius: 8px;
+      padding: 18px 32px;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 12px;
       cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(255, 95, 87, 0.3);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 25px rgba(255, 95, 87, 0.3);
     `;
 
-    button.onclick = () => {
+    const keepScrollingButton = document.createElement('button');
+    keepScrollingButton.textContent = 'Keep Scrolling (I\'m a quitter)';
+    keepScrollingButton.style.cssText = `
+      background: transparent;
+      color: #8d8d8d;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 14px 32px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    `;
+
+    goBackButton.onclick = () => {
       closePopup();
       window.location.href = 'https://x.com/home';
+    };
+
+    keepScrollingButton.onclick = () => {
+      closePopup();
+    };
+
+    goBackButton.onmouseover = () => {
+      goBackButton.style.transform = 'translateY(-2px) scale(1.02)';
+      goBackButton.style.boxShadow = '0 12px 30px rgba(255, 95, 87, 0.4)';
+    };
+    goBackButton.onmouseout = () => {
+      goBackButton.style.transform = 'translateY(0) scale(1)';
+      goBackButton.style.boxShadow = '0 8px 25px rgba(255, 95, 87, 0.3)';
+    };
+
+    keepScrollingButton.onmouseover = () => {
+      keepScrollingButton.style.background = 'rgba(255, 255, 255, 0.05)';
+      keepScrollingButton.style.color = '#ffffff';
+    };
+    keepScrollingButton.onmouseout = () => {
+      keepScrollingButton.style.background = 'transparent';
+      keepScrollingButton.style.color = '#8d8d8d';
     };
 
     // Add animations to document
@@ -158,7 +201,9 @@
     content.appendChild(title);
     content.appendChild(message);
     content.appendChild(stats);
-    content.appendChild(button);
+    buttonContainer.appendChild(goBackButton);
+    buttonContainer.appendChild(keepScrollingButton);
+    content.appendChild(buttonContainer);
     popup.appendChild(content);
     backdrop.appendChild(popup);
     document.body.appendChild(backdrop);
