@@ -1,5 +1,5 @@
 (function () {
-  const DEBUG = true; 
+  const DEBUG = true;
 
   // --- 1. HELPER: Send Count to Background ---
   function sendIncrement() {
@@ -13,7 +13,7 @@
   }
 
   // --- 2. BULLYING: Tab Switch & Close ---
-  
+
   // A. Switch Tabs (Notification + Title Change)
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === 'hidden') {
@@ -55,7 +55,41 @@
   }
 
   // Check quota every 5 seconds to keep the 'beforeunload' flag fresh
-  setInterval(() => checkQuota(() => {}), 5000);
+  setInterval(() => checkQuota(() => { }), 5000);
+
+  // --- 4. LINK INTERCEPTION (Soft Mode) ---
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (!link) return;
+
+    // Skip if it's an internal X link or a relative path
+    const url = link.href;
+    if (!url || url.startsWith('javascript:') || url.startsWith('#')) return;
+
+    try {
+      const linkUrl = new URL(url);
+      const isX = linkUrl.hostname.includes('x.com') || linkUrl.hostname.includes('twitter.com');
+
+      if (!isX) {
+        // Check mode and quota
+        chrome.storage.sync.get(['mode', 'count', 'requiredReplies'], (data) => {
+          const mode = data.mode || 'hard';
+          const count = data.count || 0;
+          const required = data.requiredReplies || 3;
+
+          if (mode === 'easy' && count < required) {
+            e.preventDefault();
+            console.log("[ReplyGuy] Soft mode link click intercepted.");
+
+            // Trigger popup
+            chrome.runtime.sendMessage({ type: 'USER_LEFT_TAB' });
+          }
+        });
+      }
+    } catch (err) {
+      console.error("[ReplyGuy] URL parsing error:", err);
+    }
+  }, true);
 
 
   // --- 3. COUNTING LOGIC (The "Perfect" Logic) ---
@@ -64,7 +98,7 @@
   document.addEventListener('click', (e) => {
     // Find the closest button
     const btn = e.target.closest('button') || e.target.closest('[role="button"]');
-    
+
     if (btn) {
       const txt = btn.innerText || "";
       const label = btn.getAttribute('aria-label') || "";
@@ -80,15 +114,15 @@
         }
         // Fallback: Check if we are in a Reply Modal
         else {
-            const modal = btn.closest('[role="dialog"]');
-            if (modal) {
-                // Check if modal title says "Reply"
-                const heading = modal.querySelector('h2');
-                if (heading && heading.innerText.includes('Reply')) {
-                    console.log("[ReplyGuy] Reply Modal button clicked!");
-                    setTimeout(sendIncrement, 500);
-                }
+          const modal = btn.closest('[role="dialog"]');
+          if (modal) {
+            // Check if modal title says "Reply"
+            const heading = modal.querySelector('h2');
+            if (heading && heading.innerText.includes('Reply')) {
+              console.log("[ReplyGuy] Reply Modal button clicked!");
+              setTimeout(sendIncrement, 500);
             }
+          }
         }
       }
     }
