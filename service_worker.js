@@ -116,7 +116,7 @@ chrome.alarms.onAlarm.addListener((a) => {
 
 // --- 4. NAVIGATION BLOCKING ---
 // Block navigation away from X/Twitter when quota not met (Hard Mode)
-// Or show notification only (Easy Mode)
+// Or show notification + popup (Easy Mode)
 chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
   // Only check top-level navigation (not iframes)
   if (details.frameId !== 0) return;
@@ -140,16 +140,32 @@ chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
         chrome.notifications.create({
           type: 'basic',
           iconUrl: 'icon.png',
-          title: mode === 'hard' ? 'Nice Try!' : 'Hey, Wait!',
+          title: mode === 'hard' ? 'NICE TRY!' : 'EYFS! WAIT!',
           message: mode === 'hard'
-            ? `You need ${required - count} more replies before you can leave. ${roast}`
-            : `You still need ${required - count} more replies. ${roast}`,
+            ? `Finish your ${required - count} replies first. ${roast}`
+            : `You still have ${required - count} more replies to do. ${roast}`,
           priority: 2
         });
 
         // Only block navigation in hard mode
         if (mode === 'hard') {
           chrome.tabs.update(details.tabId, { url: 'https://x.com/home' });
+        } else {
+          // In easy mode, we just trigger the roast popup on the active tab
+          // This covers address bar navigation as well (popup will show on the new page)
+          setTimeout(async () => {
+            try {
+              await chrome.tabs.sendMessage(details.tabId, {
+                type: 'SHOW_ROAST_POPUP',
+                roast: roast,
+                count: count,
+                required: required
+              });
+            } catch (e) {
+              // Target page might not be fully loaded or supported
+              console.log("Could not send roast popup to new page:", e);
+            }
+          }, 1000); // Give target page a second to load
         }
       }
     } catch (e) {
