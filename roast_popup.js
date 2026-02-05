@@ -94,18 +94,50 @@
       font-weight: 500;
     `;
 
+    const statsContainer = document.createElement('div');
+    statsContainer.style.cssText = `
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 40px;
+      gap: 12px;
+    `;
+
     const stats = document.createElement('div');
-    stats.textContent = `Replies: ${count}/${required}`;
+    stats.textContent = `${count} / ${required} REPLIES DONE`;
     stats.style.cssText = `
       color: #8d8d8d;
-      font-size: 16px;
-      margin: 0 0 30px 0;
-      font-family: monospace;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 10px;
-      border-radius: 8px;
-      display: inline-block;
+      font-size: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 8px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      letter-spacing: 1px;
     `;
+
+    // Progress Bar
+    const progressTrack = document.createElement('div');
+    progressTrack.style.cssText = `
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+    `;
+    const progressFill = document.createElement('div');
+    const percent = Math.min((count / required) * 100, 100);
+    progressFill.style.cssText = `
+      width: ${percent}%;
+      height: 100%;
+      background: #ff5f57;
+      box-shadow: 0 0 10px rgba(255, 95, 87, 0.8);
+      transition: width 1s ease-out;
+    `;
+    progressTrack.appendChild(progressFill);
+
+    statsContainer.appendChild(stats);
+    statsContainer.appendChild(progressTrack);
 
     const buttonContainer = document.createElement('div');
     buttonContainer.style.cssText = `
@@ -200,7 +232,7 @@
     // Assemble
     content.appendChild(title);
     content.appendChild(message);
-    content.appendChild(stats);
+    content.appendChild(statsContainer);
     buttonContainer.appendChild(goBackButton);
     buttonContainer.appendChild(keepScrollingButton);
     content.appendChild(buttonContainer);
